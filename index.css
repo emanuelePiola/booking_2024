@@ -1,0 +1,309 @@
+body{
+    margin: 0px;
+    display: flex;
+    flex-direction: column;
+    justify-content:flex-start;
+    align-items: center;
+    height: 100vh;
+}
+
+/* *************** nav ****************** */
+nav{
+	width: 100%;
+	background-color: #8fc4b6;
+}
+
+nav a{
+	color: white;
+	font-weight: bold;
+}
+
+nav a:hover{
+	color: #f1a687;
+
+}
+
+nav a:nth-of-type(1) img{
+	border-radius: 3px;
+}
+
+nav img{
+	border-radius: 50%;
+}
+
+/* ********* città selection ************ */
+.citta{
+	margin-top:16px;
+	text-align:center;
+	padding:16px;
+	font-weight:bold;
+}
+
+.citta form{
+	padding: 40px;
+	border-radius: 7px;
+	background-color: #f1a687;
+}
+
+#filtri {
+	width: 100%;
+	height: 25px;
+	margin-right: 3px;
+}
+#filtri div{
+	float: left;
+}
+#filtri div span{
+	margin: 0 5px;
+	color: white;
+}
+#filtri div span:hover{
+	cursor: pointer;
+}
+#filtri  a{
+	float: right;
+	width: 40px;
+	color: #35706d;
+}
+#filtri  a:hover{
+	cursor: pointer;
+}
+#filtri>div{
+	width: fit-content;
+}
+
+.citta form input{
+	width: 100%;
+	border: 1px solid #ccc;
+	padding: 6px;
+	border-radius: 5px;
+	padding-left: 10px;
+}
+
+#suggestions{
+	width: 100%;
+	text-align: left;
+	margin-top: 3px;
+	padding-left: 10px;
+	border-left: 3px solid #35706d;
+}
+#suggestions>p:hover{
+	cursor: pointer;
+}
+
+/* ********* hotel selection ************ */
+.hotel>div{
+	border:1px solid #bbb;
+	margin:10px 0;
+	padding:16px;
+	display:flex;
+	flex-direction: column;
+	
+}
+.hotel>div>div:nth-of-type(1){
+	display: flex;
+}
+.hotel>div>div>img{
+	height:160px; 
+}
+.hotel>div>div>div{
+	margin:4px 15px;
+}
+.hotel>div>div>div h4 span{
+	color:#f1a687;
+	font-weight:bold;
+	font-size:1em;
+	vertical-align:middle;
+	margin-right:5px;
+}
+.hotel>div>div>div h4 img{
+	width:24px;
+	margin:-2px;
+	vertical-align:middle;
+}
+.hotel>div>div>div p{
+	font-size:0.8em;	
+}
+.hotel>div>div>div a{
+	float:right;
+}
+#btnMap{
+	float:right;
+	border-radius: 50%;
+	width: 40px;
+	height: 40px;
+	margin: 0 10px;
+	padding: 2px;
+	border: 1px solid black;
+}
+#btnMap:hover{
+	content: url("img/hotels/maps_hover.png");
+	padding: 0;
+	cursor: pointer;
+}
+
+.prezzo{
+	color:#0A0;
+	font-weight:bold;
+	font-size:1.1em;
+	padding-left:5px; 
+	padding-right:5px;
+}
+
+.mapContainers{
+	margin-top: 10px;
+	display: block;
+	width: 100%;
+	height: 400px;
+}
+/* ********** details(date) ************* */
+.scegliDate{
+	background-color: #f1a687;
+	color: white;
+	padding:16px;
+	height: 320px;
+	margin-top: 10px;
+	border-radius: 10px;
+	font-weight: bold;
+}
+
+.scegliDate input{
+	border: none;
+	border-radius: 3px;
+}
+
+.scegliDate p:nth-of-type(4){
+	margin: 5px 3px;
+	display: flex;
+}
+.scegliDate p:nth-of-type(4) label{
+	margin-left: 5px;
+	padding-top: 7px;
+}
+.scegliDate input[type="checkbox"] {
+    accent-color: black;
+}    
+
+.scegliDate > *{
+   font-size:0.8em;
+}
+
+/* ************* details **************** */
+.dettagli{
+	margin-top: 5px;
+	text-align: center;
+}
+
+.dettagli h3{
+	font-weight:bold;
+	color: #35706d;
+}
+
+/*immagini*/
+.dettagli img{
+	height:160px;
+	margin-right:10px;
+}
+
+/*contenuto*/
+.dettagli>div:nth-of-type(2){
+  margin-top:20px;
+  text-align: left;
+}
+.dettagli>div:nth-of-type(2) h3{
+	color: #8fc4b6;
+}
+
+#contenuto>div:nth-of-type(2){
+	display: flex;
+}
+
+/*specifiche*/
+.dettagli table{
+	background-color: #f5dac4;
+	border-radius: 10px;
+	margin: 20px auto;
+	width: 80%;
+	text-align: center;
+}
+.dettagli table img{
+	margin: 10px auto;
+	width: 40px;
+	height: 40px;
+}
+.dettagli table th{
+	border-right: 1px solid #f1a687;
+	border-bottom: 1px solid #f1a687;
+	width: 50%;
+}
+.dettagli table td{
+	border-bottom: 1px solid #f1a687;
+	width: 50%;
+}
+
+/*tariffe & camere*/
+#tariffe{
+	display: inline-block;
+	width: 55%;
+}
+#camere{
+	display: inline-block;
+}
+
+/*recensioni*/
+#recensioni{
+	width: 100%;
+	margin-top: 20px;
+	text-align: left;
+}
+#recensioni h3{
+	color: #8fc4b6;
+}
+#recensioni>div:nth-of-type(1) div{
+	border: 1px solid black;
+	border-radius: 10px;
+	width: 90%;
+	padding: 20px;
+	margin: 10px auto;
+}
+#recensioni>div:nth-of-type(1) div img{
+	width:24px;
+	height: 24px;
+}
+
+#recensioni>div:nth-of-type(2){
+	line-height: 50px;
+}
+#recensioni>div:nth-of-type(2) img{
+	width: 50px;
+	height: 50px;
+	border-radius: 50%;
+}
+#starNumber{
+	width:30px;
+	height: 30px;
+	background-image: url("img/star.png");
+	background-position: center;
+	background-size: cover;
+	margin: 0 3px;
+	text-align: center;
+	line-height: 30px;
+	font-weight: bold;
+	font-size: small;
+	display: inline-block;
+}
+#starNumber:hover{
+	cursor: pointer;
+}
+#recensioni div:nth-of-type(2) input{
+	height: 50px;
+	width: 75%;
+	margin: 10px;
+	padding-left: 10px;
+	border-radius: 25px;
+}
+#recensioni div:nth-of-type(2) button{
+	height: 30px;
+	line-height: 15px;
+	margin-left: 5px;
+}
