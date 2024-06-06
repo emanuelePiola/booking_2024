@@ -470,82 +470,88 @@ $(document).ready(function(){
 				let meseFine=dataFine.split('-')[1];
 				let giornoInizio=dataInizio.split('-')[2];
 				let giornoFine=dataFine.split('-')[2];
-				for (const item of data) {
-					let meseInizioTariffa=item["dataInizio"].split('-')[1];
-					let giornoInizioTariffa=item["dataInizio"].split('-')[2];
-					let meseFineTariffa=item["dataFine"].split('-')[1];
-					let giornoFineTariffa=item["dataFine"].split('-')[2];
-					if(meseInizio>=meseInizioTariffa && meseInizio<=meseFineTariffa)
-					{
-						if(meseInizio==meseInizioTariffa)
+				if(data.length>0)
+				{
+					for (const item of data) {
+						let meseInizioTariffa=item["dataInizio"].split('-')[1];
+						let giornoInizioTariffa=item["dataInizio"].split('-')[2];
+						let meseFineTariffa=item["dataFine"].split('-')[1];
+						let giornoFineTariffa=item["dataFine"].split('-')[2];
+						if(meseInizio>=meseInizioTariffa && meseInizio<=meseFineTariffa)
 						{
-							if(giornoInizio>=giornoInizioTariffa)
+							if(meseInizio==meseInizioTariffa)
+							{
+								if(giornoInizio>=giornoInizioTariffa)
+								{
+									prezzoPerPersona=item["prezzo"];
+									break;
+								}
+							}
+							else if(meseInizio==meseFineTariffa)
+							{
+								if(giornoInizio<giornoFineTariffa)
+								{
+									prezzoPerPersona=item["prezzo"];
+									break;
+								}
+							}
+							else
 							{
 								prezzoPerPersona=item["prezzo"];
 								break;
 							}
-						}
-						else if(meseInizio==meseFineTariffa)
-						{
-							if(giornoInizio<giornoFineTariffa)
-							{
-								prezzoPerPersona=item["prezzo"];
-								break;
-							}
-						}
-						else
-						{
-							prezzoPerPersona=item["prezzo"];
-							break;
 						}
 					}
-				}
-				console.log(codHotel, codUtente, dataInizio, dataFine, nPersone, tipoStanza, prezzoPerPersona)
-			
-				inviaRichiesta("GET", "server/getHotelCod.php", {codHotel})
-				.catch(errore)
-				.then(function({data}){
-					let hotel = data[0];
-					inviaRichiesta("GET", "server/getStanzeDisponibili.php", {codHotel, dataInizio, dataFine, tipoStanza})
+					console.log(codHotel, codUtente, dataInizio, dataFine, nPersone, tipoStanza, prezzoPerPersona)
+				
+					inviaRichiesta("GET", "server/getHotelCod.php", {codHotel})
 					.catch(errore)
 					.then(function({data}){
-						console.log(data);
-						let nPrenotazioni = data[0]["COUNT(*)"]
-						let keyStanze;
-						let keyPrenotate;
-						if(tipoStanza=="suites")
-						{
-							keyStanze=tipoStanza;
-							keyPrenotate = tipoStanza + "Prenotate";
-						}
-						else
-						{
-							keyStanze="stanze" + tipoStanza[0].toUpperCase() + tipoStanza.slice(1);
-							keyStanze = keyStanze.substring(0, keyStanze.length-1) + "e";
-							keyPrenotate = tipoStanza.substring(0, tipoStanza.length-1) + "e" + "Prenotate";
-						}
-						console.log(nPrenotazioni, keyStanze)
-						if(nPrenotazioni<hotel[keyStanze])
-						{
-							let newValue = parseInt(hotel[keyPrenotate]+1);
-							console.log(newValue, hotel[keyPrenotate]);
-							inviaRichiesta("GET", "server/prenotaStanza.php", {codHotel, keyPrenotate, newValue, codUtente, dataInizio, dataFine, nPersone, prezzoPerPersona, tipoStanza})
-							.catch(errore)
-							.then(function({data}){
-								let nGiorni= 30*(meseFine - meseInizio) + (giornoFine - giornoInizio);
-								let prezzoTotale=nPersone * prezzoPerPersona * nGiorni;
-								console.log(prezzoTotale);
-								
-								basicSweetAlert("LA PRENOTAZIONE E' ANDATA A BUON FINE", "La prenotazione per " + nPersone + " persone corrispondente a " + nGiorni + " giorni di soggiorno risulta in un prezzo totale di: " + prezzoTotale + "€", "success", 400, "#f5dac4", false)
-							});
-						}
-						else
-						{
-							setAlert("Siamo spiacenti, non ci sono camere disponibili per " + nPersone + " persone nel periodo specificato");
-						}
+						let hotel = data[0];
+						inviaRichiesta("GET", "server/getStanzeDisponibili.php", {codHotel, dataInizio, dataFine, tipoStanza})
+						.catch(errore)
+						.then(function({data}){
+							console.log(data);
+							let nPrenotazioni = data[0]["COUNT(*)"]
+							let keyStanze;
+							let keyPrenotate;
+							if(tipoStanza=="suites")
+							{
+								keyStanze=tipoStanza;
+								keyPrenotate = tipoStanza + "Prenotate";
+							}
+							else
+							{
+								keyStanze="stanze" + tipoStanza[0].toUpperCase() + tipoStanza.slice(1);
+								keyStanze = keyStanze.substring(0, keyStanze.length-1) + "e";
+								keyPrenotate = tipoStanza.substring(0, tipoStanza.length-1) + "e" + "Prenotate";
+							}
+							console.log(nPrenotazioni, keyStanze)
+							if(nPrenotazioni<hotel[keyStanze])
+							{
+								let newValue = parseInt(hotel[keyPrenotate]+1);
+								console.log(newValue, hotel[keyPrenotate]);
+								inviaRichiesta("GET", "server/prenotaStanza.php", {codHotel, keyPrenotate, newValue, codUtente, dataInizio, dataFine, nPersone, prezzoPerPersona, tipoStanza})
+								.catch(errore)
+								.then(function({data}){
+									let nGiorni= 30*(meseFine - meseInizio) + (giornoFine - giornoInizio);
+									let prezzoTotale=nPersone * prezzoPerPersona * nGiorni;
+									console.log(prezzoTotale);
+									
+									basicSweetAlert("LA PRENOTAZIONE E' ANDATA A BUON FINE", "La prenotazione per " + nPersone + " persone corrispondente a " + nGiorni + " giorni di soggiorno risulta in un prezzo totale di: " + prezzoTotale + "€", "success", 400, "#f5dac4", false)
+								});
+							}
+							else
+							{
+								setAlert("Siamo spiacenti, non ci sono camere disponibili per " + nPersone + " persone nel periodo specificato");
+							}
+						});
 					});
-				});
-				
+				}
+				else
+				{
+					setAlert("Siamo spiacenti, l'hotel non può essere prenotato a causa di prezzo non definito")
+				}
 			});
 		}
 		else
